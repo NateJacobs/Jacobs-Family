@@ -63,8 +63,8 @@
 	    				<?php endforeach; ?>
 	    				</ul>
     				<?php endif; ?>
-    				<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add-location">Add locations</button>
-    				<div id="add-location" class="modal fade" tabindex="-1" role="dialog">
+    				<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#image-add-location">Add locations</button>
+    				<div id="image-add-location" class="modal fade" tabindex="-1" role="dialog">
 					<div class="modal-dialog modal-sm">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -81,7 +81,7 @@
 										<input type="text" class="form-control" id="location-name" name="location-name">
 									</div>
 									<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary btn-sm">Add</button>
+									<button type="button" id="submit-photo-location" class="btn btn-primary btn-sm">Add</button>
 								</form>
 							</div>
 						</div>
