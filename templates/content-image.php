@@ -15,7 +15,19 @@
 			</figure>
 			<br>
 		<?php endif; ?>
-		<?php the_content(); ?>
+		<?php $content = get_the_content(); ?>
+		<?php if(!empty($content)): ?>
+			<?php the_content(); ?>
+		<?php else: ?>
+			<form class="form collapse" id="image-add-description" role="form">
+				<div class="form-group">
+					<textarea class="form-control" id="image-description" name="image-description"></textarea>
+				</div>
+				<button type="button" id="save-image-description" class="btn btn-primary btn-sm">Save description</button>
+			</form>
+			<br>
+			<button type="button" id="add-description-button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#image-add-description">Add a description</button><br><br>
+		<?php endif; ?>
     </div>
     <footer class="well">
     		<div class="row">
@@ -116,6 +128,23 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" id="submit-photo-tag">Save changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<div id="image-add-description" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Add a description</h4>
+				</div>
+				<div class="modal-body">
+					<textarea class="form-control" id="photo-description" name="photo-description"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="submit-photo-tag">Save Description</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->

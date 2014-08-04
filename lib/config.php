@@ -56,7 +56,7 @@ function roots_display_sidebar() {
       'is_404',
       'is_front_page',
       'is_attachment',
-      ['is_category', 'family-photo'],
+      ['is_category', 'family-photos'],
       ['is_tax', 'photo-people'],
       ['is_tax', 'photo-location']
     ),
