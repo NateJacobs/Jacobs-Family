@@ -20,9 +20,15 @@
 		<?php foreach($people->get_results() as $person): ?>
 			<tr>
 				<td><a href="<?php echo $utilities->get_person_url($person); ?>"><?php echo $person->get('first_name'); ?> <?php echo $person->get('last_name'); ?></a><?php if(!$utilities->is_living($person->get('living'), $person->get('birth_date'))){echo '<small> Deceased</small>';} ?></td>
-				<td><?php echo $utilities->get_person_age($person->get('birth_date'), $person->get('death_date')); ?>
-				<td><?php echo $utilities->get_date_for_display($person->get('birth_date')); ?></td>
-				<td><?php echo $person->get('birth_place'); ?></td>
+				<?php if($utilities->living_allowed($person)): ?>
+					<td><?php echo $utilities->get_person_age($person->get('birth_date'), $person->get('death_date')); ?>
+					<td><?php echo $utilities->get_date_for_display($person->get('birth_date')); ?></td>
+					<td><?php echo $person->get('birth_place'); ?></td>
+				<?php else: ?>
+					<td></td>
+					<td></td>
+					<td></td>
+				<?php endif; ?>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

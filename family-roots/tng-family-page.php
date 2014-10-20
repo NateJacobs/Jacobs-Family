@@ -12,13 +12,15 @@
 		<?php $divorce_place_object = new TNG_Place(null, $family->divorce_place); ?>
 		<?php $married = '0000-00-00' != $family->get('marriage_date') ? $utilities->get_date_for_display($family->get('marriage_date')).' &mdash; <a href="'.$utilities->get_place_url($marriage_place_object).'">'.$family->get('marriage_place').'</a>' : '' ?>
 		<?php $divorced = '0000-00-00' != $family->get('divorce_date') ? $utilities->get_date_for_display($family->get('divorce_date')).' &mdash; <a href="'.$utilities->get_place_url($divorce_place_object).'">'.$family->get('divorce_place').'</a>' : '' ?>
-		<?php if(!empty($married)): ?>
-			<dt>Marriage</dt>
-			<dd><?php echo $married; ?></dd>
-		<?php endif; ?>
-		<?php if(!empty($divorced)): ?>
-			<dt>Divorce</dt>
-			<dd><?php echo $divorced; ?></dd>
+		<?php if($utilities->living_allowed($family->get('father')) && $utilities->living_allowed($family->get('mother'))): ?>
+			<?php if(!empty($married)): ?>
+				<dt>Marriage</dt>
+				<dd><?php echo $married; ?></dd>
+			<?php endif; ?>
+			<?php if(!empty($divorced)): ?>
+				<dt>Divorce</dt>
+				<dd><?php echo $divorced; ?></dd>
+			<?php endif; ?>
 		<?php endif; ?>
 	</dl>
 	<!-- father -->
@@ -26,14 +28,14 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($family->get('father')); ?>"><?php echo $family->get_father_name(); ?></a> &ndash; Age: <?php echo $utilities->get_person_age($family->get('father')->birth_date, $family->get('father')->death_date); ?> <?php if(!$utilities->is_living($family->get('father')->living, $family->get('father')->birth_date)){echo '<small> Deceased</small>';} ?></h3>
+					<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($family->get('father')); ?>"><?php echo $family->get_father_name(); ?></a> <?php if($utilities->living_allowed($family->get('father'))): ?>&ndash; Age: <?php echo $utilities->get_person_age($family->get('father')->birth_date, $family->get('father')->death_date); ?> <?php endif; ?><?php if(!$utilities->is_living($family->get('father')->living, $family->get('father')->birth_date)){echo '<small> Deceased</small>';} ?></h3>
 				</div>
 				<table class="table">
 				    	<tr>
 				    		<td>Birth:</td>
 				    		<?php $birth_place_object = new TNG_Place(null, $family->get('father')->birth_place); ?>
 				    		<?php $birth_place = !empty($family->get('father')->birth_place) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$family->get('father')->birth_place.'</a>' : '';?>
-						<td><?php echo $utilities->get_date_for_display($family->get('father')->birth_date).$birth_place; ?></td>
+						<td><?php if($utilities->living_allowed($family->get('father'))): ?><?php echo $utilities->get_date_for_display($family->get('father')->birth_date).$birth_place; ?><?php endif; ?></td>
 				    	</tr>
 				    <?php if(!$utilities->is_living($family->get('father')->living, $family->get('father')->birth_date)): ?>
 					<tr>
@@ -69,14 +71,14 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($family->get('mother')); ?>"><?php echo $family->get_mother_name(); ?></a> &ndash; Age: <?php echo $utilities->get_person_age($family->get('mother')->birth_date, $family->get('mother')->death_date); ?> <?php if(!$utilities->is_living($family->get('mother')->living, $family->get('mother')->birth_date)){echo '<small> Deceased</small>';} ?></h3>
+					<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($family->get('mother')); ?>"><?php echo $family->get_mother_name(); ?></a> <?php if($utilities->living_allowed($family->get('mother'))): ?> &ndash; Age: <?php echo $utilities->get_person_age($family->get('mother')->birth_date, $family->get('mother')->death_date); ?> <?php endif; ?><?php if(!$utilities->is_living($family->get('mother')->living, $family->get('mother')->birth_date)){echo '<small> Deceased</small>';} ?></h3>
 				</div>
 				<table class="table">
 				    	<tr>
 				    		<td>Birth:</td>
 				    		<?php $birth_place_object = new TNG_Place(null, $family->get('mother')->birth_place); ?>
 				    		<?php $birth_place = !empty($family->get('mother')->birth_place) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$family->get('mother')->birth_place.'</a>' : '';?>
-						<td><?php echo $utilities->get_date_for_display($family->get('mother')->birth_date).$birth_place; ?></td>
+						<td><?php if($utilities->living_allowed($family->get('mother'))): ?><?php echo $utilities->get_date_for_display($family->get('mother')->birth_date).$birth_place; ?><?php endif; ?></td>
 				    	</tr>
 				    <?php if(!$utilities->is_living($family->get('mother')->living, $family->get('mother')->birth_date)): ?>
 					<tr>
@@ -115,14 +117,14 @@
 			<div class="col-sm-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($child); ?>"><?php echo $child->get('first_name').' '.$child->get('last_name'); ?></a> &ndash; Age: <?php echo $utilities->get_person_age($child->get('birth_date'), $child->get('death_date')); ?> <?php if(!$utilities->is_living($child->get('living'), $child->get('birth_date'))){echo '<small> Deceased</small>';} ?></h3>
+						<h3 class="panel-title"><a href="<?php echo $utilities->get_person_url($child); ?>"><?php echo $child->get('first_name').' '.$child->get('last_name'); ?></a> <?php if($utilities->living_allowed($child)): ?> &ndash; Age: <?php echo $utilities->get_person_age($child->get('birth_date'), $child->get('death_date')); ?><?php endif; ?> <?php if(!$utilities->is_living($child->get('living'), $child->get('birth_date'))){echo '<small> Deceased</small>';} ?></h3>
 					</div>
 					<table class="table">
 				    		<tr>
 					    		<td>Birth:</td>
 					    		<?php $birth_place_object = new TNG_Place(null, $child->get('birth_place')); ?>
 					    		<?php $birth_place = !empty($child->get('birth_place')) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$child->get('birth_place').'</a>' : '';?>
-							<td><?php echo $utilities->get_date_for_display($child->get('birth_date')).$birth_place; ?></td>
+							<td><?php if($utilities->living_allowed($child)): ?><?php echo $utilities->get_date_for_display($child->get('birth_date')).$birth_place; ?><?php endif; ?></td>
 					    	</tr>
 					    <?php if(!$utilities->is_living($child->get('living'), $child->get('birth_date'))): ?>
 						<tr>

@@ -13,14 +13,18 @@
 	</span>
 	<div class="media-body">
 		<h2 class="media-heading"><?php echo $person->get('first_name').' '.$person->get('last_name'); ?></h2>
+		<?php if($utilities->living_allowed($person)): ?>
 		<h4>Age: <?php echo $utilities->get_person_age($person->get('birth_date'), $person->get('death_date')); ?> <?php if(!$utilities->is_living($person->get('living'), $person->get('birth_date'))){echo '<small> Deceased</small>';} ?></h4>
+		<?php endif; ?>
 		<table class="table">
+			<?php if($utilities->living_allowed($person)): ?>
 			<tr>
 				<td>Birth:</td>
 				<?php $birth_place_object = new TNG_Place(null, $person->get('birth_place')); ?>
 				<?php $birth_place = !empty($person->get('birth_place')) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$person->get('birth_place').'</a>' : '';?>
 				<td><?php echo $utilities->get_date_for_display($person->get('birth_date')).$birth_place; ?></td>
 			</tr>
+			<?php endif; ?>
 			<?php if(!$utilities->is_living($person->get('living'), $person->get('birth_date'))): ?>
 			<tr>
 				<td>Death:</td>
@@ -57,7 +61,11 @@
 							<?php $divorce_place_object = new TNG_Place(null, $partner->divorce_place); ?>
 							<?php $married = '0000-00-00' != $partner->marriage_date ? ' &mdash; Married '.$utilities->get_date_for_display($partner->marriage_date).' &mdash; <a href="'.$utilities->get_place_url($marriage_place_object).'">'.$partner->marriage_place.'</a>' : '' ?>
 							<?php $divorced = '0000-00-00' != $partner->divorce_date ? ' &mdash; Divorced '.$utilities->get_date_for_display($partner->divorce_date).' &mdash; <a href="'.$utilities->get_place_url($divorce_place_object).'">'.$partner->divorce_place.'</a>' : '' ?>
+							<?php if($utilities->living_allowed($person)): ?>
 							<a href="<?php echo $utilities->get_person_url($partner_object); ?>"><?php echo $partner_object->get('first_name').' '.$partner_object->get('last_name'); ?></a> &ndash; <a href="<?php echo $utilities->get_family_url($partner->family_id); ?>">Family Details</a><?php echo $married.' '.$divorced; ?>
+							<?php else: ?>
+								<a href="<?php echo $utilities->get_person_url($partner_object); ?>"><?php echo $partner_object->get('first_name').' '.$partner_object->get('last_name'); ?></a>
+							<?php endif; ?>
 							<br>
 						<?php endif; ?>
 					<?php endforeach; ?>
@@ -72,7 +80,10 @@
 					<?php foreach($children as $child): ?>
 						<?php $child_object = new TNG_Person($child);?>
 						<a href="<?php echo $utilities->get_person_url($child_object); ?>"><?php echo $child_object->get('first_name').' '.$child_object->get('last_name'); ?></a> 
-						(Age <?php echo $utilities->get_person_age($child_object->get('birth_date'), $child_object->get('death_date')); ?>) <?php if(!$utilities->is_living($child_object->get('living'), $child_object->get('birth_date'))){echo '<small> Deceased</small>';} ?>
+						<?php if($utilities->living_allowed($person)): ?>
+							(Age <?php echo $utilities->get_person_age($child_object->get('birth_date'), $child_object->get('death_date')); ?>)
+						<?php endif; ?>
+							<?php if(!$utilities->is_living($child_object->get('living'), $child_object->get('birth_date'))){echo '<small> Deceased</small>';} ?>
 						<br>
 					<?php endforeach; ?>
 				</td>
@@ -86,7 +97,10 @@
 					<?php foreach($siblings as $sibling): ?>
 						<?php $sibling_object = new TNG_Person($sibling);?>
 						<a href="<?php echo $utilities->get_person_url($sibling_object); ?>"><?php echo $sibling_object->get('first_name').' '.$sibling_object->get('last_name'); ?></a>
-						(Age <?php echo $utilities->get_person_age($sibling_object->get('birth_date'), $sibling_object->get('death_date')); ?>) <?php if(!$utilities->is_living($sibling_object->get('living'), $sibling_object->get('birth_date'))){echo '<small> Deceased</small>';} ?>
+						<?php if($utilities->living_allowed($person)): ?>
+							(Age <?php echo $utilities->get_person_age($sibling_object->get('birth_date'), $sibling_object->get('death_date')); ?>)
+						<?php endif; ?>
+						<?php if(!$utilities->is_living($sibling_object->get('living'), $sibling_object->get('birth_date'))){echo '<small> Deceased</small>';} ?>
 						<br>
 					<?php endforeach; ?>
 				</td>
@@ -95,6 +109,7 @@
 		</table>
 	</div>
 </div>
+<?php if($utilities->living_allowed($person)): ?>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
 	<li class="active"><a href="#events" role="tab" data-toggle="tab">Events</a></li>
@@ -180,3 +195,4 @@
 		<?php endif; ?>
 	<?php endforeach; ?>
 </div>
+<?php endif; ?>
