@@ -8,7 +8,8 @@
 	<h1><?php echo rawurldecode($lastname); ?></h1>
 </div>
 <p class="lead">All the people with the last name of <?php echo rawurldecode($lastname); ?>.</p>
-<?php if(!empty($people->get_results())): ?>
+<?php $results = $people->get_results(); ?>
+<?php if(!empty($results)): ?>
 <table class="table">
 	<thead>
 		<th>Name</th>
