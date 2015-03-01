@@ -20,22 +20,25 @@
 			<?php if($utilities->living_allowed($person)): ?>
 			<tr>
 				<td>Birth:</td>
-				<?php $birth_place_object = new TNG_Place(null, $person->get('birth_place')); ?>
-				<?php $birth_place = !empty($person->get('birth_place')) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$person->get('birth_place').'</a>' : '';?>
+				<?php $person_birth_place = $person->get('birth_place'); ?>
+				<?php $birth_place_object = new TNG_Place(null, $person_birth_place); ?>
+				<?php $birth_place = !empty($person_birth_place) ?  ' &mdash; <a href="'.$utilities->get_place_url($birth_place_object).'">'.$person_birth_place.'</a>' : '';?>
 				<td><?php echo $utilities->get_date_for_display($person->get('birth_date')).$birth_place; ?></td>
 			</tr>
 			<?php endif; ?>
 			<?php if(!$utilities->is_living($person->get('living'), $person->get('birth_date'))): ?>
 			<tr>
 				<td>Death:</td>
-				<?php $death_place_object = new TNG_Place(null, $person->get('death_place')); ?>
-				<?php $death_place = !empty($person->get('death_place')) ?  ' &mdash; <a href="'.$utilities->get_place_url($death_place_object).'">'.$person->get('death_place').'</a>' : '';?>
+				<?php $person_death_place = $person->get('death_place'); ?>
+				<?php $death_place_object = new TNG_Place(null, $person_death_place); ?>
+				<?php $death_place = !empty($person_death_place) ?  ' &mdash; <a href="'.$utilities->get_place_url($death_place_object).'">'.$person_death_place.'</a>' : '';?>
 				<td><?php echo $utilities->get_date_for_display($person->get('death_date')).$death_place; ?></td>
 			</tr>
 			<tr>
 				<td>Burial:</td>
-				<?php $burial_place_object = new TNG_Place(null, $person->get('burial_place')); ?>
-				<?php $burial_place = !empty($person->get('burial_place')) ?  ' &mdash; <a href="'.$utilities->get_place_url($burial_place_object).'">'.$person->get('burial_place').'</a>' : '';?>
+				<?php $person_burial_place = $person->get('burial_place'); ?>
+				<?php $burial_place_object = new TNG_Place(null, $person_burial_place); ?>
+				<?php $burial_place = !empty($person_burial_place) ?  ' &mdash; <a href="'.$utilities->get_place_url($burial_place_object).'">'.$person_burial_place.'</a>' : '';?>
 				<td><?php echo $utilities->get_date_for_display($person->get('burial_date')).$burial_place; ?></td>
 			</tr>
 			<?php endif; ?>
