@@ -1,5 +1,5 @@
 <?php $utilities = new FamilyRootsUtilities() ?>
-<?php $settings = get_option('family-roots-settings'); ?>
+<?php $settings = get_option('family_roots_settings'); ?>
 <div class="page-header">
 	<h1>Last names in the <?php echo ucwords(strtolower($settings['default_tree'])); ?> family tree</h1>
 </div>
