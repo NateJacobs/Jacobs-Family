@@ -5,7 +5,7 @@ $requested_location = [
 	get_query_var('tng_locality_2')
 ];
 ?>
-<?php $locality = new TNG_Locality( $requested_location ); ?>
+<?php $locality = new TNG_Locality( $requested_location, is_user_logged_in() ); ?>
 <?php $utilities = new FamilyRootsUtilities(); ?>
 <div id="main-content" class="main-content">
 	<div class="page-content">
